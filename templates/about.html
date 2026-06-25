@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Cognitive Path Solver</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css?v=5.0">
+    <link rel="stylesheet" href="/static/landing.css">
+    <style>
+        .about-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .about-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--accent);
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            background: var(--bg-darker);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--accent);
+            border: 4px solid var(--bg-panel);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .member-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .member-id {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 12px;
+            background: var(--bg-darker);
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-main);
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body class="landing-page">
+    <nav class="landing-nav">
+        <div class="logo">
+            <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-compass" style="color: var(--accent); font-size: 28px;"></i>
+                <div>
+                    <h1 style="color: var(--text-main);">Cognitive Solver</h1>
+                    <span style="color: var(--text-muted);">AI Pathfinding Matrix</span>
+                </div>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link" style="color: var(--accent);">About Us</a>
+            <a href="/app" class="btn btn-primary landing-cta">Launch App <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </nav>
+
+    <section class="about-section">
+        <h1 class="about-title">Meet the Team</h1>
+        <p class="about-subtitle">The brilliant minds behind the Cognitive Path Solver. We are dedicated to building interactive tools to visualize complex artificial intelligence concepts.</p>
+        
+        <div class="team-grid">
+            <!-- Member 1 -->
+            <div class="team-card">
+                <div class="avatar-circle">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                </div>
+                <h3 class="member-name">D. Sri Charan</h3>
+                <div class="member-role">Developer</div>
+                <div class="member-id"><i class="fa-solid fa-id-badge"></i> 2500030716</div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="team-card">
+                <div class="avatar-circle">
+                    <i class="fa-solid fa-user-ninja"></i>
+                </div>
+                <h3 class="member-name">Ravi Satwik</h3>
+                <div class="member-role">Developer</div>
+                <div class="member-id"><i class="fa-solid fa-id-badge"></i> 2500030764</div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="team-card">
+                <div class="avatar-circle">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <h3 class="member-name">M. Dharani Jaideep</h3>
+                <div class="member-role">Developer</div>
+                <div class="member-id"><i class="fa-solid fa-id-badge"></i> 2500030269</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="landing-footer" style="margin-top: 60px;">
+        <p>&copy; 2026 Cognitive Path Solver. Built for AI visualization.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,22 @@
+=== MAZE SOLVER CLI LOG ===
+Started: 2026-06-17 11:43:31
+
+==================================================
+     INTELLIGENT MAZE SOLVER (CO1 - CO6)
+==================================================
+ Current Maze: 9x9
+ Animation   : ON (0.05s)
+ Solved Path : 0 cells in memory
+--------------------------------------------------
+1. View Environment & PEAS Declaration
+2. Select / Generate Maze
+3. Configure Animation Speed
+4. Run Uninformed Search (BFS, DFS, Bi-BFS)
+5. Run Informed Search (Greedy, A*)
+6. Run CSP Path Coloring & Scheduling
+7. Run Comparative Benchmarks
+8. Run Adversarial Search / Multi-Agent Sim (CO4)
+9. Run Probabilistic Inference & Ghost Tracking (CO5)
+10. Run Hybrid Decision Architecture (CO6)
+0. Exit
+==================================================

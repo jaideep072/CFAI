@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Maze Solver</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css?v=5.0">
+    <link rel="stylesheet" href="/static/landing.css">
+</head>
+<body class="landing-page">
+    <nav class="landing-nav" style="position: absolute; width: 100%; top: 0; left: 0; padding: 35px 50px; background: transparent; border: none; z-index: 100;">
+        <div class="logo" style="display: flex; align-items: center; gap: 18px; opacity: 0.9;">
+            <i class="fa-solid fa-brain" style="color: #81B29A; font-size: 34px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></i>
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <h1 style="color: #fff; font-size: 24px; font-weight: 800; margin: 0; letter-spacing: 0.5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Cognitive Solver</h1>
+                <span style="color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">AI Pathfinding Matrix</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="splash-container">
+        <canvas id="splashCanvas"></canvas>
+        <div class="splash-overlay">
+            <h1 class="splash-title" id="interactive-title">Intelligent Pathfinding</h1>
+            <a href="/app" class="btn btn-primary btn-large splash-btn">Enter Matrix</a>
+            <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
+        </div>
+    </div>
+
+    <!-- Feature Sections -->
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-icon reveal-left">
+                <i class="fa-solid fa-route"></i>
+            </div>
+            <div class="feature-content reveal-right">
+                <h2>Algorithmic Pathfinding</h2>
+                <p>Visualize classic search algorithms like A*, Breadth-First Search (BFS), and Uniform Cost Search (UCS) in real-time. Watch as they explore frontiers, navigate around custom obstacles, and compute optimal routes using heuristics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section reverse">
+        <div class="feature-container">
+            <div class="feature-icon reveal-right">
+                <i class="fa-solid fa-earth-americas"></i>
+            </div>
+            <div class="feature-content reveal-left">
+                <h2>Immersive 3D Topology</h2>
+                <p>Break the boundaries of 2D grids. Wrap your custom mazes mathematically around 3D primitives like Spheres, Cylinders, and Cubes. Watch the Pac-Man agent travel across planetary surfaces to reach its goal.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-icon reveal-left">
+                <i class="fa-solid fa-palette"></i>
+            </div>
+            <div class="feature-content reveal-right">
+                <h2>Constraint Satisfaction</h2>
+                <p>Once a path is found, apply complex CSP algorithms to the solution. Run 3-Coloring engines to ensure no adjacent nodes share the same state, or schedule waypoints chronologically without conflicts.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section reverse">
+        <div class="feature-container">
+            <div class="feature-icon reveal-right">
+                <i class="fa-solid fa-ghost"></i>
+            </div>
+            <div class="feature-content reveal-left">
+                <h2>Adversarial AI & Tracking</h2>
+                <p>Place an adversarial Ghost on the grid. Play Minimax games to outsmart your opponent, or restrict your vision and use Hidden Markov Models (HMM) to calculate probability distributions of the ghost's hidden location.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Us Section -->
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-icon reveal-left">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="feature-content reveal-right">
+                <h2>About Us</h2>
+                <p>We are a team of AI enthusiasts and developers passionate about algorithms and pathfinding. This project was built to demonstrate the power of intelligent agents and cognitive modeling in complex environments.</p>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        const title = document.getElementById('interactive-title');
+        const text = title.innerText;
+        title.innerHTML = '';
+        for(let char of text) {
+            if(char === ' ') {
+                title.innerHTML += '&nbsp;&nbsp;';
+            } else {
+                let span = document.createElement('span');
+                span.innerText = char;
+                span.className = 'glassy-letter';
+                title.appendChild(span);
+            }
+        }
+    </script>
+    <script src="/static/landing_anim.js"></script>
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

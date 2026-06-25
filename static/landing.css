@@ -1,0 +1,209 @@
+/* LANDING PAGE SPECIFIC CSS */
+
+.landing-page {
+    display: block !important;
+    height: auto !important;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    background-color: #111;
+    scroll-behavior: smooth;
+}
+
+.splash-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #1e1e24;
+}
+
+#splashCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.splash-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the text again */
+    background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, transparent 70%); /* Glassy background */
+    pointer-events: none;
+}
+
+.splash-title {
+    font-size: 5vw;
+    font-weight: 900;
+    margin-bottom: 40px;
+    letter-spacing: -1px;
+    text-align: center;
+    cursor: pointer;
+    pointer-events: auto; /* Make it clickable */
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.glassy-letter {
+    color: rgba(255, 255, 255, 0.1);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: inline-block;
+}
+
+.glassy-letter:hover, .glassy-letter:active {
+    color: #fff;
+    -webkit-text-stroke: 0px transparent;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(129, 178, 154, 0.8), 0 0 80px rgba(129, 178, 154, 0.6);
+    transform: scale(1.15) translateY(-5px);
+    z-index: 2;
+    position: relative;
+}
+
+.splash-btn {
+    pointer-events: auto;
+    font-size: 16px;
+    padding: 16px 40px;
+    background-color: rgba(129, 178, 154, 0.9) !important; /* Emerald matching the pacman */
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    border-radius: var(--radius-md);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.splash-btn:hover {
+    background-color: #81B29A !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(129, 178, 154, 0.4) !important;
+}
+
+/* Scroll down indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 24px;
+    animation: bounce 2s infinite;
+    z-index: 20;
+    pointer-events: none;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+    40% { transform: translateY(-20px) translateX(-50%); }
+    60% { transform: translateY(-10px) translateX(-50%); }
+}
+
+/* Feature Sections */
+.feature-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 10%;
+    color: #fff;
+    background: #111;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feature-section:nth-child(even) {
+    background: #181818;
+}
+
+.feature-container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+    gap: 60px;
+}
+
+.feature-section.reverse .feature-container {
+    flex-direction: row-reverse;
+}
+
+.feature-icon {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    font-size: 150px;
+    color: #81B29A;
+    text-shadow: 0 0 40px rgba(129, 178, 154, 0.3);
+}
+
+.feature-content {
+    flex: 1;
+}
+
+.feature-content h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.feature-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+}
+
+/* Scroll Animations */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.active.reveal-left,
+.active.reveal-right,
+.active.reveal-up {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* Landing page dark scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #111;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #81B29A;
+}

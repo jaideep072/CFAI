@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Pathfinding &amp; Maze Solver Visualizer</title>
+    <meta name="description" content="An interactive web application to visualize uninformed and informed search algorithms, constraint satisfaction problem path coloring, and waypoint scheduling in a dynamic grid environment.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css?v=4.0">
+</head>
+<body>
+    <div id="app-container">
+        
+        <!-- TOP NAVIGATION HEADER -->
+        <header id="app-header" class="glass-panel">
+            <div class="header-logo">
+                <a href="/" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <i class="fa-solid fa-compass logo-icon"></i>
+                    <div>
+                        <h2 style="margin: 0;">Cognitive Path Solver</h2>
+                        <span class="sub" style="margin: 0;">Dynamic AI Matrix v4.0</span>
+                    </div>
+                </a>
+            </div>
+            <nav class="app-nav">
+                <a href="/about" style="text-decoration: none; color: var(--text-main); font-weight: 600; padding: 8px 16px; border-radius: var(--radius-md); transition: background var(--transition-normal);"><i class="fa-solid fa-users"></i> About Us</a>
+                <button class="nav-btn active" data-page="dashboard"><i class="fa-solid fa-book-open"></i> Guide &amp; Docs</button>
+                <button class="nav-btn" data-page="pathfinding"><i class="fa-solid fa-network-wired"></i> Pathfinding &amp; CSP</button>
+                <button class="nav-btn" data-page="adversarial"><i class="fa-solid fa-ghost"></i> Adversarial Arena</button>
+                <button class="nav-btn" data-page="probabilistic"><i class="fa-solid fa-tower-broadcast"></i> Probabilistic Tracker</button>
+                <button class="nav-btn" data-page="hybrid"><i class="fa-solid fa-shuffle"></i> Hybrid Reasoner</button>
+            </nav>
+        </header>
+
+        <!-- MAIN WORKSPACE WRAPPER -->
+        <div id="app-workspace" class="page-dashboard">
+
+            <!-- PAGE 1: DASHBOARD & GUIDE (FULL-WIDTH) -->
+            <div id="page-dashboard">
+                
+                <!-- Welcome Banner -->
+                <div class="dashboard-welcome" style="text-align: center; margin-bottom: 40px; padding: 20px 0;">
+                    <h1 style="color: orange !important; font-size: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">System Documentation &amp; Guide</h1>
+                    <p style="color: #5C677D; font-size: 16px;">Explore the visualizer workspaces, algorithms, and models powering the Cognitive Path Solver.</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    
+                    <!-- Card 1: Pathfinding & CSP -->
+                    <div class="glass-panel guide-card pathfinding">
+                        <div class="card-header">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <h3>1. Pathfinding &amp; CSP Workspace</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="feature-highlight">Visualize uninformed, heuristic-guided search, and constraint satisfaction solvers on dynamic terrain grids.</p>
+                            
+                            <div class="feature-subsection">
+                                <h5>Supported Search Algorithms:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>BFS &amp; Bidirectional BFS:</strong> Gurantee shortest path; Bidirectional BFS searches from both ends to reduce node expansion.</li>
+                                    <li><strong>Uniform Cost Search (UCS):</strong> Finds the cheapest path considering terrain weights (Mud = 3, Water = 6, Open = 1).</li>
+                                    <li><strong>Depth-First Search (DFS):</strong> Fast, memory-efficient search; does not guarantee optimal paths.</li>
+                                    <li><strong>A* &amp; Weighted A*:</strong> Heuristic search utilizing Manhattan, Euclidean, or Chebyshev distance. Weighted A* scales heuristics by $w$ (1.0 - 5.0) to speed up search.</li>
+                                    <li><strong>IDA* (Iterative Deepening A*):</strong> Depth-first search with heuristic cost cutoffs, combining DFS memory efficiency with A* optimality.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="feature-subsection">
+                                <h5>Heuristic Functions:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>Manhattan Distance:</strong> Horizontal + vertical step count (admissible on 4-way grids).</li>
+                                    <li><strong>Euclidean Distance:</strong> Straight-line vector distance (always admissible).</li>
+                                    <li><strong>Chebyshev / Diagonal:</strong> Maximum of horizontal and vertical changes.</li>
+                                    <li><strong>Zero Heuristic:</strong> Equivalent to UCS ($h=0$).</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>Constraint Satisfaction (CSP) Tools:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>Path 3-Coloring:</strong> Solves graph coloring constraints using backtracking search with MRV, LCV, and Forward Checking to assign colors to path steps.</li>
+                                    <li><strong>Waypoint Scheduling:</strong> Schedules 5 checkpoints along the path into chronological slots ($T_1 < T_2 < \dots < T_5$).</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>Comparative Benchmark Table:</h5>
+                                <p>Runs all algorithms on the active grid layout and displays path length, nodes expanded, memory peak, and CPU latency to compare efficiency.</p>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>How to Use:</h5>
+                                <ol class="step-list">
+                                    <li>Switch to **Pathfinding &amp; CSP** in the navigation header.</li>
+                                    <li>Draw walls or weight cells (Mud/Water) on the grid, or choose a preset.</li>
+                                    <li>Choose an algorithm and click **Solve &amp; Animate** to start the visualization.</li>
+                                    <li>Once solved, run Path Coloring or Waypoint Scheduling from the right panel.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Adversarial Arena -->
+                    <div class="glass-panel guide-card adversarial">
+                        <div class="card-header">
+                            <i class="fa-solid fa-ghost"></i>
+                            <h3>2. Adversarial Arena</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="feature-highlight">Simulate zero-sum multi-agent games modeling an Evader (Agent) and a Chaser (Ghost) on the grid.</p>
+                            
+                            <div class="feature-subsection">
+                                <h5>Decision Strategies:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>Minimax (with Alpha-Beta Pruning):</strong> Assuming a worst-case optimal adversary. Prunes branches to speed up search.</li>
+                                    <li><strong>Expectimax Search:</strong> Models the ghost as a stochastic agent, calculating expected utility over random ghost moves instead of absolute minimax.</li>
+                                    <li><strong>Search Depth:</strong> Slider adjusting lookahead depth (from 2 to 6 steps).</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>How to Use:</h5>
+                                <ol class="step-list">
+                                    <li>Switch to **Adversarial Arena** tab.</li>
+                                    <li>Click **Place Ghost Mode** and select any open grid cell to position the ghost.</li>
+                                    <li>Select your Evader Strategy (Minimax or Expectimax) and depth.</li>
+                                    <li>Use **Step** to play single turns, or **Auto-Play** to run the game loop.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Probabilistic Tracker -->
+                    <div class="glass-panel guide-card probabilistic">
+                        <div class="card-header">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                            <h3>3. Probabilistic HMM Tracker</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="feature-highlight">Track a hidden ghost moving stochastically using noisy distance readings and probabilistic inference.</p>
+                            
+                            <div class="feature-subsection">
+                                <h5>Core Inference Models:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>Hidden Markov Model (HMM) Filter:</strong> Calculates a probability distribution heatmap over all open grid cells. Updates belief at each step using transition probability and sensor likelihood.</li>
+                                    <li><strong>Variable Elimination:</strong> Computes exact marginal queries (e.g., $P(\text{Ghost Near} \mid \text{Alarm Active})$) by eliminating factor variables algebraically in a Bayes Net.</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>How to Use:</h5>
+                                <ol class="step-list">
+                                    <li>Switch to the **Probabilistic Tracker** tab.</li>
+                                    <li>Place a ghost on the grid in Adversarial Arena.</li>
+                                    <li>Click **Update HMM** to capture a noisy sensor reading and see the probability distribution heatmap update.</li>
+                                    <li>Click **Run Worked Trace** to view the step-by-step mathematical trace of Variable Elimination.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Hybrid Reasoner -->
+                    <div class="glass-panel guide-card hybrid">
+                        <div class="card-header">
+                            <i class="fa-solid fa-shuffle"></i>
+                            <h3>4. Hybrid Reasoner</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="feature-highlight">Evaluate paths under uncertainty by combining threat belief maps, risk tolerance, and CSP scheduling constraints.</p>
+                            
+                            <div class="feature-subsection">
+                                <h5>Decision Theory &amp; CSP:</h5>
+                                <ul class="feature-list">
+                                    <li><strong>Expected Utility (EU) Decision:</strong> Compares the direct path (shorter but passes near the ghost) against a detour path. Calculates $EU = \sum P(\text{safe}) \cdot U(\text{cost}) + P(\text{threat}) \cdot U(\text{capture})$.</li>
+                                    <li><strong>Risk Tolerance ($w$):</strong> A slider adjusting preference from risk-averse ($w=0.0$, detours preferred) to risk-tolerant ($w=1.0$, direct paths preferred).</li>
+                                </ul>
+                            </div>
+
+                            <div class="feature-subsection">
+                                <h5>How to Use:</h5>
+                                <ol class="step-list">
+                                    <li>Switch to the **Hybrid Reasoner** tab.</li>
+                                    <li>Place a ghost, and run a few HMM updates to build a localized threat probability map.</li>
+                                    <li>Adjust the **Risk Tolerance** slider on the left controls.</li>
+                                    <li>Click **Execute Decision Cycle** to compute expected utilities and print the reasoning trace.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PEAS DECLARATION -->
+                    <div class="glass-panel peas-card-spacious">
+                        <h3 class="tab-title" style="margin-bottom: 15px;"><i class="fa-solid fa-earth-americas"></i> PEAS Environment Profile</h3>
+                        <div class="peas-grid-spacious">
+                            <div class="peas-box performance">
+                                <h5><i class="fa-solid fa-gauge-simple-high"></i> Performance Measures</h5>
+                                <ul>
+                                    <li><strong>Path Cost:</strong> Accumulation of terrain step weights (Open=1, Mud=3, Water=6).</li>
+                                    <li><strong>Search Space:</strong> Nodes expanded during pathfinding frontier propagation.</li>
+                                    <li><strong>Computational Cost:</strong> Latency in milliseconds to execute solvers.</li>
+                                </ul>
+                            </div>
+                            <div class="peas-box environment">
+                                <h5><i class="fa-solid fa-cube"></i> Environment</h5>
+                                <ul>
+                                    <li>Fully observable grid edges, wall layouts, and traversal costs.</li>
+                                    <li>Episodic, static obstacles, and deterministic actions.</li>
+                                </ul>
+                            </div>
+                            <div class="peas-box actuators">
+                                <h5><i class="fa-solid fa-robot"></i> Actuators</h5>
+                                <p>Standard grid actions: displace North (N), South (S), East (E), and West (W).</p>
+                            </div>
+                            <div class="peas-box sensors">
+                                <h5><i class="fa-solid fa-eye"></i> Sensors</h5>
+                                <p>Location coordinate tracking, obstacle checks, and noisy distance sensors.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SIDEBAR: Controls & Configuration -->
+            <aside id="sidebar-controls" class="glass-panel">
+                
+                <div class="scrollable-controls">
+                    
+                    <!-- SECTION 1: GRID MATRIX CONFIG (SHARED) -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Grid Matrix Config</h2>
+                        
+                        <div class="form-group">
+                            <label for="maze-preset">Preset Matrix Mode</label>
+                            <select id="maze-preset">
+                                <option value="small">Small Sample (7x9)</option>
+                                <option value="large" selected>Large Sample (21x21)</option>
+                                <option value="custom">Custom Random Maze (Backtracking)</option>
+                                <option value="custom_prims">Custom Random Maze (Prim's)</option>
+                                <option value="empty">Empty Canvas (Custom Size)</option>
+                            </select>
+                        </div>
+                        
+                        <div id="custom-maze-params" class="hidden">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="maze-rows">Rows (odd)</label>
+                                    <input type="number" id="maze-rows" min="5" max="49" value="15" step="2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maze-cols">Cols (odd)</label>
+                                    <input type="number" id="maze-cols" min="5" max="49" value="15" step="2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="maze-seed">Random Seed</label>
+                                <input type="number" id="maze-seed" min="1" max="9999" value="42">
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button id="btn-generate" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate</button>
+                            <button id="btn-clear" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i> Clear Paths</button>
+                        </div>
+                        <div class="button-group" style="margin-top: 8px;">
+                            <input type="file" id="file-import" accept=".json" style="display: none;">
+                            <button id="btn-import" class="btn btn-secondary" onclick="document.getElementById('file-import').click()"><i class="fa-solid fa-file-import"></i> Import</button>
+                            <button id="btn-export" class="btn btn-secondary"><i class="fa-solid fa-file-export"></i> Export</button>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Terrain Placement Tool</label>
+                            <div class="tool-selector">
+                                <button id="tool-wall" class="btn-tool active" title="Draw Walls"><i class="fa-solid fa-cube"></i> Wall</button>
+                                <button id="tool-mud" class="btn-tool" title="Draw Mud (Weight: 3)"><i class="fa-solid fa-bolt"></i> Mud (3)</button>
+                                <button id="tool-water" class="btn-tool" title="Draw Water (Weight: 6)"><i class="fa-solid fa-droplet"></i> Water (6)</button>
+                                <button id="tool-erase" class="btn-tool" title="Clear cell (Weight: 1)"><i class="fa-solid fa-eraser"></i> Erase</button>
+                            </div>
+                        </div>
+                        
+                        <div class="environment-options">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="env-partially-observable">
+                                <label for="env-partially-observable" class="checkbox-label">
+                                    <strong>Partially Observable</strong>
+                                    <span class="label-desc">Fog-of-war based on agent sight</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="env-heatmap">
+                                <label for="env-heatmap" class="checkbox-label">
+                                    <strong>Heuristic Heatmap</strong>
+                                    <span class="label-desc">Visualize distance gradient</span>
+                                </label>
+                            </div>
+                            <div id="vision-radius-group" class="form-group range-group hidden">
+                                <label for="vision-radius">Vision Radius: <span id="val-vision-radius">2</span></label>
+                                <input type="range" id="vision-radius" min="1" max="5" value="2" step="1">
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- SECTION 2: ALGORITHM CORE (PATHFINDING ONLY) -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-bezier-curve"></i> Algorithm Core</h2>
+                        
+                        <div class="form-group">
+                            <label for="algo-select">Select Algorithm</label>
+                            <select id="algo-select">
+                                <optgroup label="Uninformed Search (Optimal Path Length)">
+                                    <option value="bfs">Breadth-First Search (BFS)</option>
+                                    <option value="bidirectional_bfs">Bidirectional BFS</option>
+                                    <option value="ucs">Uniform Cost Search (UCS)</option>
+                                </optgroup>
+                                <optgroup label="Uninformed Search (Suboptimal)">
+                                    <option value="dfs">Depth-First Search (DFS)</option>
+                                </optgroup>
+                                <optgroup label="Informed Search (Heuristic)">
+                                    <option value="astar" selected>A* Search</option>
+                                    <option value="weighted_astar">Weighted A* Search</option>
+                                    <option value="greedy">Greedy Best-First Search</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div id="heuristic-params">
+                            <div class="form-group">
+                                <label for="heuristic-select">Heuristic Function</label>
+                                <select id="heuristic-select">
+                                    <option value="manhattan">Manhattan Distance (Admissible)</option>
+                                    <option value="euclidean">Heuristic Euclidean (Admissible)</option>
+                                    <option value="diagonal">Chebyshev / Diagonal (Admissible)</option>
+                                    <option value="zero">Zero Heuristic (h=0, UCS)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div id="weight-params" class="form-group range-group hidden">
+                            <label for="algo-weight">Heuristic Weight (w): <span id="val-algo-weight">1.5</span></label>
+                            <input type="range" id="algo-weight" min="1.0" max="5.0" value="1.5" step="0.1">
+                        </div>
+                        
+                        <button id="btn-solve" class="btn btn-accent"><i class="fa-solid fa-bolt-lightning"></i> Solve &amp; Animate</button>
+                    </section>
+                    
+                    <!-- SECTION 3: ENGINE PLAYBACK (PATHFINDING ONLY) -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-sliders"></i> Engine Playback</h2>
+                        
+                        <div class="playback-controls">
+                            <button id="btn-play-pause" class="btn btn-icon btn-outline" title="Play/Pause Animation" disabled>
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button id="btn-step-prev" class="btn btn-icon btn-outline" title="Step Backward" disabled>
+                                <i class="fa-solid fa-backward-step"></i>
+                            </button>
+                            <button id="btn-step-next" class="btn btn-icon btn-outline" title="Step Forward" disabled>
+                                <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                            <button id="btn-reset-anim" class="btn btn-icon btn-outline" title="Reset Animation" disabled>
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="form-group range-group">
+                            <label for="anim-speed">Frame Delay: <span id="val-anim-speed">50</span>ms</label>
+                            <input type="range" id="anim-speed" min="5" max="300" value="50" step="5">
+                        </div>
+                        
+                        <div class="progress-bar-container">
+                            <div id="anim-progress" class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span id="progress-step-count">0 / 0</span>
+                            <span id="anim-status-label">Idle</span>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: ADVERSARIAL CONTROLS -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Adversarial Engine</h2>
+                        
+                        <div class="form-group">
+                            <label>Opponent Ghost Setup</label>
+                            <button id="btn-place-ghost" class="btn btn-secondary btn-full"><i class="fa-solid fa-ghost"></i> Scatter Ghosts (Arcade)</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adv-control-mode">Agent Control</label>
+                            <select id="adv-control-mode" class="input-sm">
+                                <option value="auto" selected>AI Mode (Minimax/Expectimax)</option>
+                                <option value="manual">Manual Mode (Keyboard Arrows)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="adv-algo-container">
+                            <label for="adv-algo">Evader Strategy</label>
+                            <select id="adv-algo" class="input-sm">
+                                <option value="minimax" selected>Minimax (Alpha-Beta Pruning)</option>
+                                <option value="expectimax">Expectimax (Stochastic Ghost)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group range-group">
+                            <label for="adv-depth">Search Depth: <span id="val-adv-depth">4</span></label>
+                            <input type="range" id="adv-depth" min="2" max="6" value="4" step="1">
+                        </div>
+
+                        <div class="button-group">
+                            <button id="btn-adv-step" class="btn btn-accent" disabled><i class="fa-solid fa-forward-step"></i> Step</button>
+                            <button id="btn-adv-play" class="btn btn-primary" disabled><i class="fa-solid fa-play"></i> Auto-Play</button>
+                        </div>
+                        <button id="btn-adv-reset" class="btn btn-secondary btn-full" style="margin-top: 8px;"><i class="fa-solid fa-rotate-left"></i> Reset Game</button>
+
+                        <div id="adv-status-panel" class="info-card hidden" style="margin-top: 10px;">
+                            <h4 class="info-card-title"><i class="fa-solid fa-circle-nodes"></i> Game State</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <p id="adv-status-text">Place ghosts and start game.</p>
+                                <p id="pacman-score-container" class="hidden" style="font-size: 1.2em; color: var(--accent); font-weight: bold;">
+                                    <i class="fa-solid fa-coins"></i> <span id="val-pacman-score">0</span>
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: HMM & VE CONTROLS -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-satellite-dish"></i> Probabilistic Tracking</h2>
+                        
+                        <div class="csp-card" style="border: none; padding: 0; background: transparent;">
+                            <p class="card-desc">Tracks ghost location probability heatmap based on noisy distance readings.</p>
+                            
+                            <div class="progress-labels" style="margin: 8px 0;">
+                                <span>Noisy Sensor: <strong id="lbl-sensor-val">-</strong></span>
+                                <span>True Dist: <strong id="lbl-true-dist-val">-</strong></span>
+                            </div>
+                            
+                            <div class="button-group">
+                                <button id="btn-hmm-step" class="btn btn-primary" disabled><i class="fa-solid fa-wave-square"></i> Update HMM</button>
+                                <button id="btn-hmm-reset" class="btn btn-secondary"><i class="fa-solid fa-trash"></i> Reset HMM</button>
+                            </div>
+                        </div>
+
+                        <div class="csp-card" style="margin-top: 12px; padding: 10px 0 0 0; border: none; border-top: 1px solid var(--border-color); background: transparent;">
+                            <h4 style="margin-bottom: 6px;"><i class="fa-solid fa-diagram-project"></i> Variable Elimination</h4>
+                            <button id="btn-run-ve" class="btn btn-accent btn-full"><i class="fa-solid fa-calculator"></i> Run Worked Trace</button>
+                        </div>
+
+                        <div id="ve-results-container" class="info-card hidden" style="margin-top: 12px;">
+                            <h4 class="info-card-title"><i class="fa-solid fa-square-poll-vertical"></i> Trace Inference</h4>
+                            <div id="ve-results-content" class="code-output" style="max-height: 180px; overflow-y: auto;"></div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 6: HYBRID CONTROLS -->
+                    <section class="control-section">
+                        <h2 class="section-title"><i class="fa-solid fa-shuffle"></i> Hybrid Decision Engine</h2>
+                        
+                        <div class="form-group range-group">
+                            <label for="hybrid-risk">Risk Tolerance (w): <span id="val-hybrid-risk">0.5</span></label>
+                            <input type="range" id="hybrid-risk" min="0.0" max="1.0" value="0.5" step="0.05">
+                            <span class="label-desc" style="margin-top: 3px;">0.0 = Risk Averse, 1.0 = Risk Tolerant</span>
+                        </div>
+
+                        <button id="btn-hybrid-run" class="btn btn-accent btn-full" disabled><i class="fa-solid fa-gears"></i> Execute Decision Cycle</button>
+
+                        <div class="info-card" style="margin-top: 12px;">
+                            <h4 class="info-card-title"><i class="fa-solid fa-terminal"></i> Explainable Trace</h4>
+                            <div id="hybrid-trace-content" class="code-output" style="max-height: 180px; overflow-y: auto; font-family: var(--font-mono); font-size: 10px;">
+                                Setup HMM and click button to resolve utility.
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+                
+                <div class="sidebar-footer">
+                    <p>Status: <span id="api-status" class="status-indicator online">Connected</span></p>
+                </div>
+            </aside>
+            
+            <!-- MAIN AREA: Grid Visualizer -->
+            <main id="main-visualizer" class="glass-panel">
+                <header class="visualizer-header" style="height: auto; flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 8px;">
+                    <div id="page-explanation" style="font-size: 13px; color: var(--text-main); font-weight: 500; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 4px;">
+                        <strong>Pathfinding &amp; CSP:</strong> Visualize uninformed, heuristic-guided search, and constraint satisfaction solvers on dynamic terrain grids.
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%;">
+                            <div class="instructions" style="margin: 0;">
+                                <i class="fa-solid fa-circle-nodes info-icon"></i>
+                                <p id="instruction-text" style="margin: 0;"><strong>Matrix Mode Active:</strong> Click and drag on the grid to place objects.</p>
+                            </div>
+                            <div class="view-controls" style="display: flex; gap: 8px; align-items: center;">
+                                <select id="shape-select" class="input-sm" style="padding: 4px 8px; font-size: 12px; height: 32px; border-radius: 4px;">
+                                    <option value="flat" selected>Flat Plane</option>
+                                    <option value="sphere">Sphere World</option>
+                                    <option value="cylinder">Cylinder World</option>
+                                    <option value="cube">Cube World</option>
+                                </select>
+                                <button id="btn-toggle-3d" class="btn btn-secondary" style="padding: 4px 12px; height: 32px; font-size: 12px;"><i class="fa-solid fa-cube"></i> 3D Mode</button>
+                            </div>
+                        </div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="legend-color start"></span> Start</div>
+                            <div class="legend-item"><span class="legend-color goal"></span> Goal</div>
+                            <div class="legend-item"><span class="legend-color ghost"></span> Ghost</div>
+                            <div class="legend-item"><span class="legend-color wall"></span> Wall</div>
+                            <div class="legend-item"><span class="legend-color mud"></span> Mud</div>
+                            <div class="legend-item"><span class="legend-color water"></span> Water</div>
+                            <div class="legend-item"><span class="legend-color visited"></span> Visited</div>
+                            <div class="legend-item"><span class="legend-color frontier"></span> Frontier</div>
+                            <div class="legend-item"><span class="legend-color path"></span> Path</div>
+                            <div class="legend-item"><span class="legend-color adv-path"></span> Predicted Path</div>
+                        </div>
+                    </div>
+                </header>
+                
+                <div id="grid-card">
+                    <div id="grid-container">
+                        <!-- Dynamic Grid will be injected here -->
+                    </div>
+                </div>
+                
+                <div id="pacman-3d-canvas" class="hidden" style="flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 16px; overflow: hidden; width: 100%; height: 100%;">
+                    <!-- 3D Canvas will be injected here -->
+                </div>
+            </main>
+            
+            <!-- DETAIL SIDEBAR: Statistics, CSP & Benchmarks (PATHFINDING ONLY) -->
+            <aside id="sidebar-details" class="glass-panel">
+                
+                <!-- TABS NAVIGATION -->
+                <nav class="details-tabs">
+                    <button class="tab-btn active" data-tab="tab-stats">Stats</button>
+                    <button class="tab-btn" data-tab="tab-csp">CSP</button>
+                    <button class="tab-btn" data-tab="tab-benchmark">Compare</button>
+                </nav>
+                
+                <div class="tab-content-container">
+                    
+                    <!-- TAB 1: STATISTICS -->
+                    <div id="tab-stats" class="tab-content active">
+                        <h3 class="tab-title">Inference Metrics</h3>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-label">Algorithm <span class="hud-code">[SYS.TYPE]</span></span>
+                                <span id="stat-algo" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Nodes Expanded <span class="hud-code">[STATE.EXP]</span></span>
+                                <span id="stat-expanded" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Path Length <span class="hud-code">[PATH.COST]</span></span>
+                                <span id="stat-path-len" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Peak Frontier <span class="hud-code">[MEM.PEAK]</span></span>
+                                <span id="stat-frontier" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Execution Time <span class="hud-code">[SYS.LATENCY]</span></span>
+                                <span id="stat-time" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Solve Status <span class="hud-code">[SYS.STATUS]</span></span>
+                                <span id="stat-solved" class="stat-value">-</span>
+                            </div>
+                        </div>
+                        
+                        <div id="solve-details-panel" class="info-card hidden">
+                            <h4 class="info-card-title"><i class="fa-solid fa-brain"></i> Algorithmic Analysis Trace</h4>
+                            <p id="solve-details-text">Solve a maze to view details.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- TAB 2: CONSTRAINT SATISFACTION (CSP) -->
+                    <div id="tab-csp" class="tab-content">
+                        <h3 class="tab-title">Constraint Satisfaction (CSP)</h3>
+                        <p class="tab-desc">Apply Constraint Satisfaction algorithms to the solved path in memory.</p>
+                        
+                        <div class="csp-card">
+                            <h4><i class="fa-solid fa-palette"></i> Path 3-Coloring Problem</h4>
+                            <p class="card-desc">Assign Red, Green, or Blue to each step of the path such that adjacent cells do not share the same color.</p>
+                            
+                            <div class="form-group inline-row">
+                                <label for="csp-colors-num">Colors:</label>
+                                <select id="csp-colors-num" class="input-sm">
+                                    <option value="3" selected>3 Colors (Red/Green/Blue)</option>
+                                    <option value="2">2 Colors (Usually Infeasible)</option>
+                                    <option value="4">4 Colors (Easy)</option>
+                                </select>
+                            </div>
+                            
+                            <button id="btn-csp-color" class="btn btn-outline btn-full"><i class="fa-solid fa-fill-drip"></i> Run Path Coloring</button>
+                        </div>
+                        
+                        <div class="csp-card">
+                            <h4><i class="fa-solid fa-clock"></i> Waypoint Scheduling</h4>
+                            <p class="card-desc">Schedule 5 checkpoints along the path into sequential chronological slots ($T_1 < T_2 < \dots < T_5$) using backtracking constraints.</p>
+                            
+                            <button id="btn-csp-schedule" class="btn btn-outline btn-full"><i class="fa-solid fa-calendar-days"></i> Run Waypoint Scheduler</button>
+                        </div>
+                        
+                        <!-- CSP Outputs -->
+                        <div id="csp-results-container" class="info-card hidden">
+                            <h4 class="info-card-title" id="csp-results-title">CSP Results</h4>
+                            <div id="csp-results-content" class="code-output"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- TAB 3: BENCHMARK -->
+                    <div id="tab-benchmark" class="tab-content">
+                        <h3 class="tab-title">Comparative Benchmark</h3>
+                        <p class="tab-desc">Execute all search algorithms on the current grid configuration and compare their efficiency metrics.</p>
+                        
+                        <button id="btn-run-benchmark" class="btn btn-accent btn-full"><i class="fa-solid fa-chart-simple"></i> Run Comparison Benchmark</button>
+                        
+                        <div class="table-container">
+                            <table id="benchmark-table" class="hidden">
+                                <thead>
+                                    <tr>
+                                        <th>Algorithm</th>
+                                        <th>Length</th>
+                                        <th>Expanded</th>
+                                        <th>Peak F</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="benchmark-table-body">
+                                    <!-- Injected from JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div id="benchmark-analysis" class="info-card hidden">
+                            <h4 class="info-card-title"><i class="fa-solid fa-chart-line"></i> Insights &amp; Analysis</h4>
+                            <p id="benchmark-analysis-text">Perform a benchmark run to view comparison analysis.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </aside>
+            
+        </div>
+        
+    </div>
+    
+    <!-- Script Injection -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="/static/pacman3d.js?v=1.0"></script>
+    <script src="/static/script.js?v=3.0"></script>
+</body>
+</html>
