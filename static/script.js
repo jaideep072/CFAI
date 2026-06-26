@@ -1849,6 +1849,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const payload = {
             grid: grid,
             agent_pos: start,
+            goal: goal,
             ghost_belief: ghostBelief,
             risk_tolerance: parseFloat(hybridRiskSlider.value)
         };
@@ -1897,7 +1898,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 3. Print Trace Log
-            hybridTraceContent.innerHTML = data.trace.join('\n');
+            hybridTraceContent.innerHTML = data.trace.join('<br>');
             instructionText.innerHTML = `<strong>Hybrid Reasoning Complete!</strong> Explainable trace explains detour vs risk trade-offs. Checkpoints scheduled via CSP variables.`;
         })
         .catch(err => {

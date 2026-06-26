@@ -411,7 +411,13 @@ def hybrid_decide_endpoint():
         if not grid or not agent_pos or not ghost_belief:
             return jsonify({'error': 'Missing grid, agent_pos, or ghost_belief'}), 400
 
-        maze = Maze(grid, start=agent_pos, goal=(len(grid)-1, len(grid[0])-1))
+        goal = data.get('goal')
+        if goal:
+            goal = tuple(goal)
+        else:
+            goal = (len(grid)-1, len(grid[0])-1)
+
+        maze = Maze(grid, start=agent_pos, goal=goal)
         
         result = hybrid_decide(maze, agent_pos, ghost_belief, risk_tolerance)
         return jsonify(result)
