@@ -26,6 +26,22 @@ def compute_path_probability_of_capture(path: List[Cell], belief: List[List[floa
     # Return probability of capture
     return 1.0 - p_safe
 
+class RiskMaze(Maze):
+    """A custom maze that applies pathfinding penalties based on ghost belief probabilities."""
+    def __init__(self, grid: List[List[int]], start: Tuple[int, int], goal: Tuple[int, int], ghost_belief: List[List[float]]):
+        super().__init__(grid, start=start, goal=goal)
+        self.ghost_belief = ghost_belief
+        
+    def successors(self, state: State) -> List[Tuple[str, State, float]]:
+        succs = super().successors(state)
+        res = []
+        for action, nxt, cost in succs:
+            r, c = nxt.as_tuple()
+            # Apply a heavy penalty based on ghost probability to force A* to find safer routes
+            penalty = self.ghost_belief[r][c] * 500.0
+            res.append((action, nxt, cost + penalty))
+        return res
+
 def hybrid_decide(
     maze: Maze,
     agent_pos: Tuple[int, int],
@@ -59,16 +75,8 @@ def hybrid_decide(
     astar_stats = astar(local_maze, h="manhattan")
     path_direct = astar_stats.path if astar_stats.solved else []
     
-    # Candidate 2: Detour Path (A* penalizing cells where ghost belief > 0.05)
-    # We create a temporary grid where high-risk ghost cells are treated as walls
-    ghost_threshold = 0.05
-    detour_grid = [row[:] for row in maze.grid]
-    for r in range(maze.rows):
-        for c in range(maze.cols):
-            if ghost_belief[r][c] > ghost_threshold and (r, c) != agent_pos and (r, c) != maze.goal.as_tuple():
-                detour_grid[r][c] = maze.WALL  # Block high-threat cells
-
-    detour_maze = Maze(detour_grid, start=agent_pos, goal=maze.goal.as_tuple())
+    # Candidate 2: Detour Path (A* penalizing cells based on ghost belief)
+    detour_maze = RiskMaze(maze.grid, start=agent_pos, goal=maze.goal.as_tuple(), ghost_belief=ghost_belief)
     detour_stats = astar(detour_maze, h="manhattan")
     path_detour = detour_stats.path if detour_stats.solved else []
     
