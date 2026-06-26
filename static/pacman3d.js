@@ -434,7 +434,7 @@ const Pacman3D = (function() {
         animateMove,
         updateSearchState,
         setFinalPath,
-        onWindowResize,
-        setOnClick
+        setOnClick,
+        generateMaze
     };
 })();

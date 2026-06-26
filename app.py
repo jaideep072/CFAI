@@ -292,6 +292,9 @@ def adversarial_move():
         if not ghosts and data.get('ghost_pos'):
             ghosts = [{'pos': data.get('ghost_pos'), 'type': 'chaser'}]
 
+        mode = data.get('mode', 'manual')
+        depth = int(data.get('depth', 3))
+
         if not grid or not agent_pos or not ghosts:
             return jsonify({'error': 'Missing grid, agent_pos, or ghosts'}), 400
 
