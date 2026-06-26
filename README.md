@@ -1,8 +1,8 @@
-# Intelligent Maze Solver
+ Intelligent Maze Solver
 
 An AI-based Maze Solver that finds the optimal path from a start node to a goal node using intelligent search algorithms.
 
-## Features
+ Features
 
 * Multiple Search Algorithms (BFS, DFS, UCS, GBFS, A*)
 * Optimal Path Generation
@@ -13,7 +13,7 @@ An AI-based Maze Solver that finds the optimal path from a start node to a goal 
 * Hybrid Utility Evaluation
 * User-Friendly Interface
 
-## Algorithms Used
+ Algorithms Used
 
 * Breadth First Search (BFS)
 * Depth First Search (DFS)
@@ -21,7 +21,7 @@ An AI-based Maze Solver that finds the optimal path from a start node to a goal 
 * Greedy Best First Search (GBFS)
 * A* Search
 
-## Cost Calculation
+ Cost Calculation
 
 The system calculates the optimal path based on:
 
@@ -29,7 +29,7 @@ The system calculates the optimal path based on:
 * Heuristic Cost
 * Ghost Capture Probability
 
-### A* Formula
+ A* Formula
 
 ```text
 f(n) = g(n) + h(n)
@@ -40,7 +40,7 @@ Where:
 * g(n): Actual cost from start node.
 * h(n): Estimated cost to goal.
 
-## Advantages
+ Advantages
 
 * Optimal Path Finding
 * Efficient Maze Navigation
@@ -48,25 +48,25 @@ Where:
 * Intelligent Decision Making
 * Avoids Dead Ends
 
-## Technologies Used
+ Technologies Used
 
 * Python
 * Artificial Intelligence
 * Data Structures and Algorithms
 * Tkinter/Pygame
 
-## Team Members
+ Team Members
 
 * M. Dharani Jaideep (2500030269)
 * D. Sri Charan (2500030716)
 * Ravi Satwik (2500030764)
 
-## Guide
+ Guide
 
 **Dr. Veguri Joe Nithin**
 Department of Computer Science and Engineering
 KL University
 
-## Academic Year
+ Academic Year
 
 2025-2026
